@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "shopbox:block/example_block"
+    }
+  }
+}

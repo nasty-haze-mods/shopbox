@@ -1,45 +1,32 @@
 package com.danwalkercs.shopbox;
 
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.InterModComms;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
-import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.stream.Collectors;
+import com.danwalkercs.shopbox.core.init.ShopBoxModBlocks;
+import com.danwalkercs.shopbox.core.init.ShopBoxModEntities;
+import com.danwalkercs.shopbox.core.init.ShopBoxModItems;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ShopBox.MOD_ID)
 public class ShopBox
 {
     public static final String MOD_ID = "shopbox";
-    // Directly reference a log4j logger.
-    private static final Logger LOGGER = LogManager.getLogger();
 
     public ShopBox() {
-        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        modEventBus.addListener(this::setup);
+        /*
+         * Everything in Forge works on a bus.
+         * The bus picks up events and delivers them to the hooks.
+         * There are 2 buses: the mod bus and the forge bus.
+         * For registering objects, we use the mod bus.
+         */
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        // Register ourselves for server and other game events we are interested in
-        MinecraftForge.EVENT_BUS.register(this);
+        // Register the object registries with the bus
+        ShopBoxModBlocks.BLOCKS.register(eventBus);
+        ShopBoxModItems.ITEMS.register(eventBus);
+        ShopBoxModEntities.ENTITIES.register(eventBus);
     }
-
-    private void setup(final FMLCommonSetupEvent event)
-    {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
-    }
-
-
 }
