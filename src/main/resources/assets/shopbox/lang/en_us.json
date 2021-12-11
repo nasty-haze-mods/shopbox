@@ -1,5 +1,7 @@
 {
-  "item.shopbox.example_item": "Example Item",
+  "item.shopbox.shopbox": "ShopBox",
 
-  "block.shopbox.example_block": "Example Block"
+  "block.shopbox.shopbox": "ShopBox",
+
+  "itemGroup.shopbox": "ShopBox Mod"
 }
